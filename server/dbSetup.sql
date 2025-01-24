@@ -50,6 +50,8 @@ CREATE TABLE vaults(
   name VARCHAR(255) NOT NULL,
   description VARCHAR(1000) NOT NULL,
   img VARCHAR(1000) NOT NULL,
-  is_private BOOLEAN NOT NULL,
-  creator_id VARCHAR(255) NOT NULL,
+  is_private BOOLEAN NOT NULL DEFAULT false,
+  creator_id VARCHAR(255) NOT NULL
 );
+
+DROP TABLE vaults;
