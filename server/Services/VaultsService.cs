@@ -22,4 +22,30 @@ public class VaultsService
         if (vault == null) throw new Exception($"Invalid keep id: {vaultId}");
         return vault;
     }
+
+    internal Vault UpdateVault(int vaultId, string userId, Vault vaultData)
+    {
+        Vault vault = GetVaultById(vaultId);
+
+        if (vault.CreatorId != userId) throw new Exception("You can not update anothers keep");
+
+        vault.Img = vaultData.Img ?? vault.Img;
+        vault.Name = vaultData.Name ?? vault.Name;
+        vault.Description = vaultData.Description ?? vault.Description;
+        vault.IsPrivate = vaultData.IsPrivate ?? vault.IsPrivate;
+
+        _repository.UpdateVault(vault);
+
+        return vault;
+
+    }
+
+    internal string DeleteVault(int vaultId, string userId)
+    {
+        Vault vault = GetVaultById(vaultId);
+
+        if (vault.CreatorId != userId) throw new Exception("You can not delete users Keep");
+        _repository.DeleteVault(vaultId);
+        return $"Deleted {vault.Name}";
+    }
 }

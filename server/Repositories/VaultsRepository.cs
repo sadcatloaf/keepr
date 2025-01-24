@@ -49,4 +49,40 @@ public class VaultsRepository
 
         return vault;
     }
+
+    internal void UpdateVault(Vault updateData)
+    {
+        string sql = @"
+        UPDATE vaults
+        SET
+        name = @Name,
+        description = @Description,
+        img = @Img,
+        is_private = @IsPrivate
+        WHERE id = @Id LIMIT 1;";
+
+        int rowsAffected = _db.Execute(sql, updateData);
+
+        if (rowsAffected != 1) throw new Exception($"{rowsAffected} were updated and that bad juju");
+    }
+
+    internal void DeleteVault(int id)
+    {
+        string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1;";
+
+        int rowsAffected = _db.Execute(sql, new { id });
+
+        if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
+    }
 }
+
+// t; set; }
+//     public DateTime CreatedAt { get; set; }
+//     public DateTime UpdatedAt { get; set; }
+//     public string Name { get; set; }
+//     public string Description { get; set; }
+//     public string Img { get; set; }
+//     public bool? IsPrivate { get; set; }
+//     public string CreatorId { get; set; }
+//     public Account Creator { get; set; }
+// }
