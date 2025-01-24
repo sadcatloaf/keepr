@@ -1,3 +1,4 @@
+
 namespace keepr.Repositories;
 
 public class VaultsRepository
@@ -30,4 +31,22 @@ public class VaultsRepository
         return vault;
     }
 
+    internal Vault GetVaultById(int vaultId)
+    {
+        string sql = @"
+        SELECT
+        vaults.*,
+        accounts.*
+        FROM vaults
+        JOIN accounts ON vaults.creator_id = accounts.id
+        WHERE vaults.id = @vaultId;";
+
+        Vault vault = _db.Query(sql, (Vault vault, Account account) =>
+        {
+            vault.Creator = account;
+            return vault;
+        }, new { vaultId }).SingleOrDefault();
+
+        return vault;
+    }
 }
