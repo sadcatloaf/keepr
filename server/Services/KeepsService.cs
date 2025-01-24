@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Http;
+
 namespace keepr.Services;
 
 public class KeepsService
@@ -44,5 +46,14 @@ public class KeepsService
 
         return keep;
 
+    }
+
+    internal string DeleteKeep(int keepId, string userId)
+    {
+        Keep keep = GetKeepById(keepId);
+
+        if (keep.CreatorId != userId) throw new Exception("You can not delete users Keep");
+        _keepsRepository.DeleteKeep(keepId);
+        return $"Deleted {keep.Name}";
     }
 }
