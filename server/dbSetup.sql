@@ -18,9 +18,14 @@ CREATE TABLE keeps(
   description VARCHAR(1000) NOT NULL,
   img VARCHAR(1000) NOT NULL,
   views INT NOT NULL,
-  creator_id VARCHAR(255) NOT NULL,
-)
-
+  creator_id VARCHAR(255) NOT NULL
+);
+SELECT
+        keeps.*,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON keeps.creator_id = accounts.id
+        WHERE keeps.id = LAST_INSERT_ID()
 
 CREATE TABLE vaultKeeps(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +34,7 @@ CREATE TABLE vaultKeeps(
   keep_id INT NOT NULL,
   vault_id INT NOT NULL,
   creator_id VARCHAR(255) NOT NULL,
-)
+);
 
 
 CREATE TABLE vaults(
@@ -41,4 +46,4 @@ CREATE TABLE vaults(
   img VARCHAR(1000) NOT NULL,
   is_private BOOLEAN NOT NULL,
   creator_id VARCHAR(255) NOT NULL,
-)
+);
