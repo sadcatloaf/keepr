@@ -30,16 +30,21 @@ public class KeepsRepository
 
         return keep;
     }
+
+    internal List<Keep> GetAllKeeps()
+    {
+        string sql = @"
+        SELECT
+        keeps.*,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON keeps.creator_id = accounts.id;";
+
+        List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }).ToList();
+        return keeps;
+    }
 }
-
-//   public int Id { get; set; }
-//     public DateTime CreatedAt { get; set; }
-//     public DateTime UpdatedAt { get; set; }
-//     public string Name { get; set; }
-//     public string Description { get; set; }
-//     public string Img { get; set; }
-//     public int Views { get; set; }
-//     public string CreatorId { get; set; }
-
-//     public Account Creator { get; set; }
-//     public int Kept { get; set; }

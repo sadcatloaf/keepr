@@ -20,12 +20,18 @@ CREATE TABLE keeps(
   views INT NOT NULL,
   creator_id VARCHAR(255) NOT NULL
 );
-SELECT
+        SELECT
         keeps.*,
         accounts.*
         FROM keeps
         JOIN accounts ON keeps.creator_id = accounts.id
         WHERE keeps.id = LAST_INSERT_ID()
+
+        SELECT
+        keeps.*,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON keeps.creator_id = accounts.id
 
 CREATE TABLE vaultKeeps(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
