@@ -80,31 +80,29 @@ public class VaultsRepository
     {
         // SQL Query to get keeps in a public vault
         string sql = @"
-                SELECT
-                    keeps.*,
-                    accounts.*,
-                    vaultKeeps.id AS VaultKeepId
-                FROM keeps
-                JOIN accounts ON accounts.id = keeps.creator_id
-                JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
-                JOIN vaults ON vaults.id = vaultKeeps.vault_id
-                WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
+        SELECT
+            keeps.*,
+            accounts.*,
+            vaultKeeps.id AS Id
+        FROM keeps
+        JOIN accounts ON accounts.id = keeps.creator_id
+        JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
+        JOIN vaults ON vaults.id = vaultKeeps.vault_id
+        WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
 
-        var keeps = await _db.QueryAsync<Keep, Account, int, Keep>(
-            sql,
-            (keep, account, vaultKeepId) =>
+        var keeps = await _db.QueryAsync(sql, (Keep keep, Account account, int vaultKeepId) =>
             {
                 keep.Creator = account;
                 keep.VaultKeepId = vaultKeepId;
                 return keep;
             },
             new { vaultId },
-            splitOn: "id" // Dapper will split the result on 'id', as 'id' is the first column for 'accounts'
+            splitOn: "Id"  // Ensure this matches the alias used in the SELECT statement
         );
 
         return keeps.ToList();
-
     }
+
 
 }
 
