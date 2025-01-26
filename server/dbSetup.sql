@@ -5,10 +5,11 @@ CREATE TABLE IF NOT EXISTS accounts(
   name VARCHAR(255) COMMENT 'User Name',
   email VARCHAR(255) UNIQUE COMMENT 'User Email',
   picture VARCHAR(255) COMMENT 'User Picture',
-  cover_img VARCHAR(1000)
+  cover_img VARCHAR(1000) NOT NULL
 ) default charset utf8mb4 COMMENT '';
 
 DROP TABLE accounts; 
+ALTER TABLE accounts;
 
 CREATE TABLE keeps(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

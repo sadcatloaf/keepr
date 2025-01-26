@@ -56,4 +56,11 @@ public class KeepsService
         _repository.DeleteKeep(keepId);
         return $"Deleted {keep.Name}";
     }
+
+    // internal List<Keep> GetKeepInPublicVault(int vaultId)
+    // {
+    //     List<Keep> keeps = _repository.GetKeepInPublicVault(vaultId);
+    //     if (keeps == null) throw new Exception($"Invalid keep id: {vaultId}");
+    //     return keeps;
+    // }
 }

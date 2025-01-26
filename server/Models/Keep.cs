@@ -15,6 +15,7 @@ public class Keep
     public string CreatorId { get; set; }
     public Account Creator { get; set; }
     public int Kept { get; set; }
+    public int VaultKeepId { get; set; }
 }
 
 // = DateTime.UtcNow; --> formatted datetime

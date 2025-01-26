@@ -1,4 +1,5 @@
 
+
 namespace keepr.Services;
 
 public class VaultsService
@@ -48,4 +49,10 @@ public class VaultsService
         _repository.DeleteVault(vaultId);
         return $"Deleted {vault.Name}";
     }
+
+    internal async Task<List<Keep>> GetKeepInPublicVault(int vaultId)
+    {
+        return await _repository.GetKeepInPublicVault(vaultId);
+    }
+
 }

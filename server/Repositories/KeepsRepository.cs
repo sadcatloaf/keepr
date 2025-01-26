@@ -92,4 +92,45 @@ public class KeepsRepository
 
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
     }
+
+    // internal List<Keep> GetKeepInPublicVault(int vaultId)
+    // {
+    //     string sql = @"
+    //     SELECT
+    //     keeps.*,
+    //     accounts.*
+    //     FROM keeps
+    //     JOIN accounts ON accounts.id = keeps.creator_id
+    //     JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
+    //     JOIN vaults ON vaults.id = vaultKeeps.vault_id
+    //     WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
+
+    //     List<Keep> keeps = _db.Query(sql, (Keep keep, Account account, int vaultKeepId) =>
+    //     {
+    //         keep.Creator = account;
+    //         keep.VaultKeepId = vaultKeepId;
+    //         return keep;
+    //     }, new { vaultId }, splitOn: "VaultKeepId").ToList();
+    //     return keeps;
+    // }
+
+    // internal List<Keep> GetKeepInPublicVault(int vaultId)
+    // {
+    //     string sql = @"
+    //     SELECT
+    //     keeps.*,
+    //     accounts.*
+    //     FROM keeps
+    //     JOIN accounts ON accounts.id = keeps.creator_id
+    //     JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
+    //     JOIN vaults ON vaults.id = vaultKeeps.vault_id
+    //     WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
+
+    //     List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
+    //     {
+    //         keep.Creator = account;
+    //         return keep;
+    //     }, new { vaultId }).ToList();
+    //     return keeps;
+    // }
 }
