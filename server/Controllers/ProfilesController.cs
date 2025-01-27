@@ -48,21 +48,19 @@ public class ProfilesController : ControllerBase
         }
     }
 
-    // [HttpGet("{profileId}/keeps")]
-    // public ActionResult<List<Keep>> GetProfileKeeps(string profileId)
-    // {
-    //     try
-    //     {
-    //         // Fetch keeps for the profile using the service
-    //         List<Keep> keeps = _keepsService.GetProfileKeeps(profileId);
-    //         return Ok(keeps);
-    //     }
-    //     catch (Exception exception)
-    //     {
-    //         return BadRequest(exception.Message);
-    //     }
-    // }
-
+    [HttpGet("{profileId}/vaults")]
+    public ActionResult<List<Vault>> GetProfileVaults(string profileId)
+    {
+        try
+        {
+            List<Vault> vaults = _vaultsService.GetProfileVaults(profileId);
+            return Ok(vaults);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
 
 }
 
@@ -70,17 +68,3 @@ public class ProfilesController : ControllerBase
 
 
 
-
-// [HttpGet("{profileId}/vaults")]
-// public ActionResult<List<Profile>> GetProfileVaults()
-// {
-//     try
-//     {
-//         List<Profile> profileKeeps = _profilesService.GetProfileVaults();
-//         return Ok(profileKeeps);
-//     }
-//     catch (Exception exception)
-//     {
-//         return BadRequest(exception.Message);
-//     }
-// }

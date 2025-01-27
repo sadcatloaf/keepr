@@ -15,17 +15,5 @@ public class ProfilesService
         Profile profiles = _repository.GetProfile(profileId);
         return profiles;
     }
-    // internal List<Profile> GetProfileKeeps()
-    // {
-    //     List<Profile> keeps = _repository.GetProfileKeeps();
-    //     return keeps;
-    // }
-    // internal List<Profile> GetProfileVaults()
-    // {
-    //     List<Profile> keeps = _repository.GetProfileVaults();
-    //     return keeps;
-    // }
-
-
 
 }

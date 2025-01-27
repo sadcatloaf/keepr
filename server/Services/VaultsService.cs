@@ -55,4 +55,9 @@ public class VaultsService
         return await _repository.GetKeepInPublicVault(vaultId);
     }
 
+    internal List<Vault> GetProfileVaults(string profileId)
+    {
+        List<Vault> vaults = _repository.GetProfileVaults(profileId);
+        return vaults;
+    }
 }
