@@ -95,10 +95,7 @@ public class VaultsRepository
                 keep.Creator = account;
                 keep.VaultKeepId = vaultKeepId;
                 return keep;
-            },
-            new { vaultId },
-            splitOn: "Id"  // Ensure this matches the alias used in the SELECT statement
-        );
+            }, new { vaultId }, splitOn: "Id");
 
         return keeps.ToList();
     }

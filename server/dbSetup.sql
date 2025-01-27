@@ -8,6 +8,11 @@ CREATE TABLE IF NOT EXISTS accounts(
   cover_img VARCHAR(1000) NOT NULL
 ) default charset utf8mb4 COMMENT '';
 
+  SELECT
+        accounts.*
+        FROM accounts
+        WHERE accounts.id = LAST_INSERT_ID()
+
 DROP TABLE accounts; 
 ALTER TABLE accounts;
 
