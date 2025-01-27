@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState';
+import KeepCard from '@/components/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
@@ -27,8 +28,13 @@ async function getKeeps() {
 <template>
   <div class="container-fluid">
     <section class="row">
-      <div class="col-12">
-        {{ keeps }}
+      <div class="col-md-12">
+        <div class="row">
+          <div v-for="keep in keeps" :key="keep.id" class="col-md-3 p-md-2">
+            <!-- <img :src="keep.img" alt="" class="img-fluid"> -->
+            <KeepCard :keep="keep" />
+          </div>
+        </div>
       </div>
     </section>
   </div>

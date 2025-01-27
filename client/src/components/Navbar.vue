@@ -18,11 +18,12 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-sm navbar-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="/img/cw-logo.png" height="45" />
-      </div>
+      <button class="d-flex flex-column align-items-center round-pill">
+        Home
+      </button>
+      <hr>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,11 +31,17 @@ function toggleTheme() {
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
+        <div class="btn-group">
+          <button type="button" class="">Create</button>
+          <button type="button" class="dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only"></span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">New Keep</a>
+            <a class="dropdown-item" href="#">New Vault</a>
+          </div>
+        </div>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <div>
@@ -55,6 +62,12 @@ a:hover {
 
 .nav-link {
   text-transform: uppercase;
+}
+
+.round-pill {
+  height: 2rem;
+  border-radius: 10px;
+  background-color: antiquewhite;
 }
 
 .navbar-nav .router-link-exact-active {

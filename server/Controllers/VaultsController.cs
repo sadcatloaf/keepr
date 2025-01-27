@@ -83,11 +83,8 @@ public class VaultsController : ControllerBase
     {
         try
         {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
             List<Keep> keeps = await _vaultsService.GetKeepInPublicVault(vaultId);
-            if (keeps == null || keeps.Count == 0)
-            {
-                return NotFound("No keeps found in vault");
-            }
             return Ok(keeps);
         }
         catch (Exception exception)

@@ -33,7 +33,7 @@ public class VaultKeepsRepository
     }
     internal void DeleteVaultKeep(int vaultKeepId)
     {
-        string sql = "DELETE FROM keeps WHERE id = @vaultKeepId LIMIT 1;";
+        string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1;";
 
         int rowsAffected = _db.Execute(sql, new { vaultKeepId });
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that is bad juju");
