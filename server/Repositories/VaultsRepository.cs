@@ -67,11 +67,11 @@ public class VaultsRepository
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were updated and that bad juju");
     }
 
-    internal void DeleteVault(int id)
+    internal void DeleteVault(int vaultId)
     {
-        string sql = "DELETE FROM vaults WHERE id = @id LIMIT 1;";
+        string sql = "DELETE FROM vaults WHERE id = @vaultId LIMIT 1;";
 
-        int rowsAffected = _db.Execute(sql, new { id });
+        int rowsAffected = _db.Execute(sql, new { vaultId });
 
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
     }

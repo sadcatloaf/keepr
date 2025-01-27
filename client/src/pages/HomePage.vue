@@ -26,7 +26,11 @@ async function getKeeps() {
 
 <template>
   <div class="container-fluid">
-
+    <section class="row">
+      <div class="col-12">
+        {{ keeps }}
+      </div>
+    </section>
   </div>
 </template>
 

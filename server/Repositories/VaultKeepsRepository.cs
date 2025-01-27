@@ -24,4 +24,19 @@ public class VaultKeepsRepository
         VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).SingleOrDefault();
         return vaultKeep;
     }
+
+    internal VaultKeep GetVaultKeepById(int vaultKeepId)
+    {
+        string sql = "SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
+        VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new { vaultKeepId }).SingleOrDefault();
+        return vaultKeep;
+    }
+    internal void DeleteVaultKeep(int vaultKeepId)
+    {
+        string sql = "DELETE FROM keeps WHERE id = @vaultKeepId LIMIT 1;";
+
+        int rowsAffected = _db.Execute(sql, new { vaultKeepId });
+        if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that is bad juju");
+    }
+
 }

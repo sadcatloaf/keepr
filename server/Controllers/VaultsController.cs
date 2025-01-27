@@ -78,20 +78,6 @@ public class VaultsController : ControllerBase
         }
     }
 
-    // [HttpGet("{vaultId}/keeps")]
-    // public  ActionResult<List<Keep>> GetKeepInPublicVault(int vaultId)
-    // {
-    //     try
-    //     {
-    //         List<Keep> keeps = _keepsService.GetKeepInPublicVault(vaultId);
-    //         return Ok(keeps);
-    //     }
-    //     catch (Exception exception)
-    //     {
-    //         return BadRequest(exception.Message);
-    //     }
-    // }
-
     [HttpGet("{vaultId}/keeps")]
     public async Task<ActionResult<List<Keep>>> GetKeepInPublicVault(int vaultId)
     {
@@ -109,4 +95,5 @@ public class VaultsController : ControllerBase
             return BadRequest(exception.Message);
         }
     }
+
 }

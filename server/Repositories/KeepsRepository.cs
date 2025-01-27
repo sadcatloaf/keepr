@@ -84,53 +84,13 @@ public class KeepsRepository
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were updated and that bad juju");
     }
 
-    internal void DeleteKeep(int id)
+    internal void DeleteKeep(int vaultKeepId)
     {
-        string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1;";
+        string sql = "DELETE FROM keeps WHERE id = @vaultKeepId LIMIT 1;";
 
-        int rowsAffected = _db.Execute(sql, new { id });
+        int rowsAffected = _db.Execute(sql, new { vaultKeepId });
 
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
     }
 
-    // internal List<Keep> GetKeepInPublicVault(int vaultId)
-    // {
-    //     string sql = @"
-    //     SELECT
-    //     keeps.*,
-    //     accounts.*
-    //     FROM keeps
-    //     JOIN accounts ON accounts.id = keeps.creator_id
-    //     JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
-    //     JOIN vaults ON vaults.id = vaultKeeps.vault_id
-    //     WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
-
-    //     List<Keep> keeps = _db.Query(sql, (Keep keep, Account account, int vaultKeepId) =>
-    //     {
-    //         keep.Creator = account;
-    //         keep.VaultKeepId = vaultKeepId;
-    //         return keep;
-    //     }, new { vaultId }, splitOn: "VaultKeepId").ToList();
-    //     return keeps;
-    // }
-
-    // internal List<Keep> GetKeepInPublicVault(int vaultId)
-    // {
-    //     string sql = @"
-    //     SELECT
-    //     keeps.*,
-    //     accounts.*
-    //     FROM keeps
-    //     JOIN accounts ON accounts.id = keeps.creator_id
-    //     JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
-    //     JOIN vaults ON vaults.id = vaultKeeps.vault_id
-    //     WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
-
-    //     List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
-    //     {
-    //         keep.Creator = account;
-    //         return keep;
-    //     }, new { vaultId }).ToList();
-    //     return keeps;
-    // }
 }
