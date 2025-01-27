@@ -26,14 +26,6 @@ public class VaultKeepsService
 
         return vaultKeep;
     }
-    // internal string DeleteVaultKeep(int vaultKeepId, string userId)
-    // {
-    //     VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
-
-    //     if (vaultKeep.CreatorId != userId) throw new Exception("You can not delete users vaultKeep");
-    //     _repository.DeleteVaultKeep(vaultKeepId);
-    //     return "Deleted vaultKeep";
-    // }
     internal string DeleteVaultKeep(int vaultKeepId, string userId)
     {
         VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
@@ -54,23 +46,3 @@ public class VaultKeepsService
         return $"Deleted vaultKeep with ID {vaultKeepId}";
     }
 }
-
-// internal string DeleteVaultKeep(int vaultKeepId, string userId)
-// {
-//     VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
-
-//     if (vaultKeep == null)
-//     {
-//         throw new Exception($"VaultKeep with ID {vaultKeepId} not found.");
-//     }
-
-//     Console.WriteLine($"CreatorId: {vaultKeep.CreatorId}, UserId: {userId}"); // Log for debugging
-
-//     if (vaultKeep.CreatorId != userId)
-//     {
-//         throw new Exception("You can not delete another user's vaultKeep.");
-//     }
-
-//     _repository.DeleteVaultKeep(vaultKeepId);
-//     return $"Deleted vaultKeep with ID {vaultKeepId}";
-// }

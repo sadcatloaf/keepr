@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace keepr.Controllers;
 
 [Authorize]
@@ -27,4 +29,20 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  [HttpGet("vaults")]
+  public async Task<ActionResult<List<Vault>>> GetMyVaults()
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      List<Vault> accounts = _accountService.GetMyVaults(userInfo.Id);
+      return Ok(accounts);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
 }
