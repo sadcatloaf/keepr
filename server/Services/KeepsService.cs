@@ -57,4 +57,9 @@ public class KeepsService
         return $"Deleted {keep.Name}";
     }
 
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        List<Keep> keeps = _repository.GetProfileKeeps(profileId);
+        return keeps;
+    }
 }

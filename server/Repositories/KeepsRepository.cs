@@ -93,4 +93,43 @@ public class KeepsRepository
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
     }
 
+    // INNER JOIN accounts ON accounts.id = keeps.creatorId
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        string sql = @"
+        SELECT
+        accounts.*,
+        keeps.*
+        FROM accounts
+        JOIN keeps ON keeps.creator_id = accounts.id
+        WHERE accounts.id = @profileId;";
+
+        List<Keep> keeps = _db.Query(sql, (Account account, Keep keep) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }, new { profileId }).ToList();
+        return keeps;
+    }
+    // internal List<Keep> GetProfileKeeps(string profileId)
+    // {
+    //     string sql = @"
+    // SELECT
+    //     keeps.*,
+    //     accounts.id AS AccountId
+    // FROM keeps
+    // INNER JOIN accounts ON accounts.id = keeps.accountId
+    // WHERE accounts.id = @profileId;";
+
+    //     // Assuming Keep is a class that represents a keep object
+    //     //     List<Keep> keeps = _db.Query<Keep>(sql, new { profileId }).ToList();
+    //     //     return keeps;
+    //     // }
+    //     List<Keep> profiles = _db.Query(sql, (Keep keep, Account account) =>
+    //     {
+    //         keep.Creator = account;
+    //         return keep;
+    //     }, new { profileId }, splitOn: "Id").ToList();
+    //     return profiles;
+    // }
 }

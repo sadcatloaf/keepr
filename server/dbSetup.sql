@@ -61,3 +61,13 @@ CREATE TABLE vaults(
 );
 
 DROP TABLE vaults;
+
+
+
+
+SELECT
+        accounts.*,
+        keeps.*
+        FROM accounts
+        JOIN keeps ON keeps.creator_id = accounts.id
+        WHERE accounts.id = '6758bbc002d980ff6cdb96c2';

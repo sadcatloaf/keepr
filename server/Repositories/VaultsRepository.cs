@@ -82,20 +82,19 @@ public class VaultsRepository
         string sql = @"
         SELECT
             keeps.*,
-            accounts.*,
-            vaultKeeps.id AS Id
+            vaultKeeps.id AS vaultKeepId,
+            accounts.*
         FROM keeps
         JOIN accounts ON accounts.id = keeps.creator_id
         JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
         JOIN vaults ON vaults.id = vaultKeeps.vault_id
         WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
 
-        var keeps = await _db.QueryAsync(sql, (Keep keep, Account account, int vaultKeepId) =>
+        var keeps = await _db.QueryAsync(sql, (Keep keep, Account account) =>
             {
                 keep.Creator = account;
-                keep.VaultKeepId = vaultKeepId;
                 return keep;
-            }, new { vaultId }, splitOn: "Id");
+            }, new { vaultId });
 
         return keeps.ToList();
     }
