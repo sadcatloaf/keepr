@@ -61,6 +61,21 @@ public class AccountsRepository
     }, new { accountId }).ToList();
     return vaults;
   }
-}
 
+
+  internal void UpdateAccount(Account updateData)
+  {
+    string sql = @"
+        UPDATE accounts
+        SET
+        name = @Name,
+        picture = @Picture,
+        cover_img = @CoverImg
+        WHERE id = @Id LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, updateData);
+
+    if (rowsAffected != 1) throw new Exception($"{rowsAffected} were updated and that bad juju");
+  }
+}
 

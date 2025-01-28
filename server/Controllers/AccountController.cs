@@ -45,4 +45,20 @@ public class AccountController : ControllerBase
     }
   }
 
+
+  [HttpPut]
+  public async Task<ActionResult<Account>> UpdateAccount([FromBody] Account accountData)
+  {
+    try
+    {
+      Account userinfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Account account = _accountService.UpdateAccount(userinfo.Id, accountData);
+      return Ok(account);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
 }

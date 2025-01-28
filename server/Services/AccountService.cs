@@ -43,4 +43,20 @@ public class AccountService
     List<Vault> accounts = _repo.GetMyVaults(accountId);
     return accounts;
   }
+
+  internal Account UpdateAccount(string userId, Account accountData)
+  {
+    Account account = GetAccount(userId);
+
+    if (account.Id != userId) throw new Exception("You can not update another account");
+
+    account.Name = accountData.Name ?? account.Name;
+    account.Picture = accountData.Picture ?? account.Picture;
+    account.CoverImg = accountData.CoverImg ?? account.CoverImg;
+
+    _repo.UpdateAccount(account);
+
+    return account;
+
+  }
 }
