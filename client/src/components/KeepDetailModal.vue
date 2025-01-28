@@ -1,67 +1,50 @@
 <script setup>
 import { AppState } from '@/AppState';
+import { Keep } from '@/models/Keep';
 import { keepsService } from '@/services/KeepsService';
-import { logger } from '@/utils/Logger';
-import Pop from '@/utils/Pop';
-import { Modal } from 'bootstrap';
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
-const route = useRoute();
-const keeps = computed(() => AppState.keeps.filter(keep => keep.creatorId != AppState.account?.id))
 
-const editableKeepData = ref({
-    name: '',
-    description: '',
-    img: null,
-    views: 0,
-    kept: 0,
-    creatorId: '',
-})
-// async function createKeep() {
-//     try {
-//         await keepsService.createKeep(editableKeepData.value)
-//         editableKeepData.value = {
-//             name: '',
-//             description: '',
-//             img: '',
-//             views: 0,
-//             kept: 0,
-//             creatorId: ''
-//         }
-//         Modal.getInstance('#keepDetailModal').hide()
-//     } catch (error) {
-//         Pop.meow(error)
-//         logger.log('[Saving Keep]', error.message)
-//     }
-// }
-
+const keepDetail = computed(() => AppState.activeKeeps)
 
 </script>
 
 <template>
-    <!-- <form @submit.prevent="createKeep()"> -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="keepDetailModal" tabindex="-1" role="dialog" aria-labelledby="keepDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="keepDetailModal">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="keepDetailModal">{{ keepDetail?.name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img :src="keepDetail?.img" class="img-fluid rounded-start" alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p class="card-text"><small class="text-body-secondary">{{
+                                        keepDetail?.kept }}</small>
+                                    </p>
+                                    <p class="card-text"><small class="text-body-secondary">{{
+                                        keepDetail?.views }}</small>
+                                    </p>
+                                    <h5 class="card-title">{{ keepDetail?.name }}</h5>
+                                    <p class="card-text">{{ keepDetail?.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- </form> -->
 </template>
 
 <style scoped lang="scss"></style>

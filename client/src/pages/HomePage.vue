@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState';
 import KeepCard from '@/components/KeepCard.vue';
+import KeepDetailModal from '@/components/KeepDetailModal.vue';
 import { keepsService } from '@/services/KeepsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
@@ -38,6 +39,7 @@ async function getKeeps() {
       </div>
     </section>
   </div>
+  <KeepDetailModal />
 </template>
 
 <style scoped lang="scss"></style>

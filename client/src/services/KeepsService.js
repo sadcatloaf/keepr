@@ -14,5 +14,8 @@ class KeepsService {
         const keeps = response.data.map(keepPOJO => new Keep(keepPOJO))
         AppState.keeps = keeps
     }
+    setActiveKeep(keep) {
+        AppState.activeKeeps = keep
+    }
 }
 export const keepsService = new KeepsService()

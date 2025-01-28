@@ -1,14 +1,21 @@
 <script setup>
 import { Keep } from '@/models/Keep';
+import { keepsService } from '@/services/KeepsService';
 
 
-defineProps({
+const props = defineProps({
     keep: { type: Keep, required: true }
 })
+
+function setActiveKeep() {
+    keepsService.setActiveKeep(props.keep)
+}
+
 </script>
 
 <template>
-    <div class="keep-card text-light fs-4  mb-5" :style="{ backgroundImage: `url(${keep.img})` }">
+    <div @click="setActiveKeep()" class="keep-card text-light fs-4  mb-5" data-bs-toggle="modal"
+        data-bs-target="#keepDetailModal" :style="{ backgroundImage: `url(${keep.img})` }">
         <div class="inner-card d-flex flex-column justify-content-between p-3">
             <div class="text-end">
                 <span>{{ keep.name }}</span>
