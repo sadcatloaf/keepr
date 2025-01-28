@@ -43,7 +43,7 @@ async function getVaults() {
 <template>
   <div class="about text-center">
     <div v-if="account">
-      <h1>Welcome {{ account.name }}</h1>
+      <h1>{{ account.name }}</h1>
       <img class="rounded" :src="account.picture" alt="" />
       <p>{{ account.email }}</p>
     </div>
@@ -57,7 +57,6 @@ async function getVaults() {
         <div class="row">
           <h1>Keeps</h1>
           <div v-for="keep in keeps" :key="keep.id" class="col-md-3 p-md-2">
-            <!-- <img :src="keep.img" alt="" class="img-fluid"> -->
             <KeepCard :keep="keep" />
           </div>
         </div>

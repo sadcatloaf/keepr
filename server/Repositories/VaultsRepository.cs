@@ -14,8 +14,8 @@ public class VaultsRepository
     {
         string sql = @"
     INSERT INTO
-    vaults(name, description, img, creator_id)
-    VALUES(@Name, @Description, @Img, @CreatorId);
+    vaults(name, description, img, creator_id, is_private)
+    VALUES(@Name, @Description, @Img, @CreatorId, @IsPrivate);
     
     SELECT
     vaults.*,
@@ -76,7 +76,7 @@ public class VaultsRepository
         if (rowsAffected != 1) throw new Exception($"{rowsAffected} were deleted and that bad juju");
     }
 
-    public async Task<List<Keep>> GetKeepInPublicVault(int vaultId)
+    public List<Keep> GetKeepInPublicVault(int vaultId)
     {
         // SQL Query to get keeps in a public vault
         string sql = @"
@@ -88,15 +88,14 @@ public class VaultsRepository
         JOIN accounts ON accounts.id = keeps.creator_id
         JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
         JOIN vaults ON vaults.id = vaultKeeps.vault_id
-        WHERE vaultKeeps.vault_id = @vaultId AND vaults.is_private = false;";
+        WHERE vaultKeeps.vault_id = @vaultId;";
 
-        var keeps = await _db.QueryAsync(sql, (Keep keep, Account account) =>
+        List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
             {
                 keep.Creator = account;
                 return keep;
-            }, new { vaultId });
-
-        return keeps.ToList();
+            }, new { vaultId }).ToList();
+        return keeps;
     }
     internal List<Vault> GetProfileVaults(string profileId)
     {

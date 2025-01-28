@@ -2,33 +2,31 @@ namespace keepr.Services;
 
 public class VaultKeepsService
 {
-    public VaultKeepsService(VaultKeepsRepository repository)
+    public VaultKeepsService(VaultKeepsRepository repository, VaultsService vaultsService)
     {
         _repository = repository;
+        _vaultsService = vaultsService;
     }
     private readonly VaultKeepsRepository _repository;
-    // private readonly VaultsService _vaultsService;
+    private readonly VaultsService _vaultsService;
 
     internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
     {
-        // Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId);
-        // if (vault.CreatorId != userId) throw new Exception($"This is not your vaultkeep");
-
+        Vault vault = _vaultsService.GetVaultById(vaultKeepData.VaultId, userId);
+        if (vault.CreatorId != userId) throw new Exception($"yes");
         VaultKeep vaultKeeps = _repository.CreateVaultKeep(vaultKeepData);
         return vaultKeeps;
     }
 
-    private VaultKeep GetVaultKeepById(int vaultKeepId)
+    private VaultKeep GetVaultKeepById(int vaultKeepId, string userId)
     {
         VaultKeep vaultKeep = _repository.GetVaultKeepById(vaultKeepId);
-
         if (vaultKeep == null) throw new Exception($"Invalid vaultkeep id: {vaultKeepId}");
-
         return vaultKeep;
     }
     internal string DeleteVaultKeep(int vaultKeepId, string userId)
     {
-        VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
+        VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId, userId);
 
         if (vaultKeep == null)
         {

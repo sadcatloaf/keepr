@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace keepr.Controllers;
 
 [ApiController]
@@ -33,11 +35,13 @@ public class VaultsController : ControllerBase
     }
 
     [HttpGet("{vaultId}")]
-    public ActionResult<Vault> GetVaultById(int vaultId)
+    public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {
         try
         {
-            Vault vault = _vaultsService.GetVaultById(vaultId);
+            //TODO need to figure out who you are (if you're anyone at all)
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Vault vault = _vaultsService.GetVaultById(vaultId, userInfo?.Id);
             return Ok(vault);
         }
         catch (Exception exception)
@@ -52,8 +56,8 @@ public class VaultsController : ControllerBase
     {
         try
         {
-            Account userinfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            Vault vault = _vaultsService.UpdateVault(vaultId, userinfo.Id, vaultData);
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Vault vault = _vaultsService.UpdateVault(vaultId, userInfo.Id, vaultData);
             return Ok(vault);
         }
         catch (Exception exception)
@@ -84,7 +88,7 @@ public class VaultsController : ControllerBase
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            List<Keep> keeps = await _vaultsService.GetKeepInPublicVault(vaultId);
+            List<Keep> keeps = _vaultsService.GetKeepInPublicVault(vaultId, userInfo?.Id);
             return Ok(keeps);
         }
         catch (Exception exception)

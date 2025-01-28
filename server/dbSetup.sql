@@ -71,3 +71,15 @@ SELECT
         FROM accounts
         JOIN keeps ON keeps.creator_id = accounts.id
         WHERE accounts.id = '6758bbc002d980ff6cdb96c2';
+
+         SELECT
+            keeps.*,
+            vaultKeeps.id AS vaultKeepId,
+            accounts.*
+        FROM keeps
+        JOIN accounts ON accounts.id = keeps.creator_id
+        JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
+        JOIN vaults ON vaults.id = vaultKeeps.vault_id
+        WHERE vaultKeeps.vault_id = 199 AND vaults.is_private = false;
+
+        SELECT * FROM vaults WHERE is_private = false;
