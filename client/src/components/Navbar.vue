@@ -25,23 +25,24 @@ function toggleTheme() {
       </button>
       <hr>
     </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Example split danger button -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-light">Action</button>
+      <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <span class="visually-hidden">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">new keep</a></li>
+        <hr class="dropdown-divider">
+        <li><a class="dropdown-item" href="#">new vault</a></li>
+        <li>
+        </li>
+      </ul>
+    </div>
+
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <div class="btn-group">
-          <button type="button" class="">Create</button>
-          <button type="button" class="dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only"></span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">New Keep</a>
-            <a class="dropdown-item" href="#">New Vault</a>
-          </div>
-        </div>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <div>
@@ -67,7 +68,7 @@ a:hover {
 .round-pill {
   height: 2rem;
   border-radius: 10px;
-  background-color: antiquewhite;
+  background-color: rgb(174, 165, 153);
 }
 
 .navbar-nav .router-link-exact-active {

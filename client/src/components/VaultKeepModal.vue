@@ -24,11 +24,11 @@ const VaultDetail = computed(() => AppState.activeVaults)
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <p class="card-text"><small class="text-body-secondary">{{
-                                        VaultDetail?.name }}</small>
+                                    <p class="card-text"><small class="text-body-secondary">{{ VaultDetail?.name
+                                            }}</small>
                                     </p>
-                                    <p class="card-text"><small class="text-body-secondary">{{
-                                        VaultDetail?.isPrivate }}</small>
+                                    <p class="card-text"><small class="text-body-secondary">{{ VaultDetail?.isPrivate
+                                            }}</small>
                                     </p>
                                 </div>
                             </div>

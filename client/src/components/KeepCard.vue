@@ -17,11 +17,11 @@ function setActiveKeep() {
     <div @click="setActiveKeep()" class="keep-card text-light fs-4  mb-5" data-bs-toggle="modal"
         data-bs-target="#keepDetailModal" :style="{ backgroundImage: `url(${keep.img})` }">
         <div class="inner-card d-flex flex-column justify-content-between p-3">
-            <div class="text-end">
-                <span>{{ keep.name }}</span>
+            <div class="">
+                <span class="p-3">{{ keep.name }}</span>
+                <img :src="keep.creator.picture" alt="" class="creator-img img-fluid">
             </div>
             <div>
-                <img :src="keep.creator.picture" alt="" class="creator-img img-fluid">
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ function setActiveKeep() {
     }
 
     .creator-img {
-        height: 5rem;
+        height: 3rem;
         border-radius: 50%;
         aspect-ratio: 1/1;
     }
