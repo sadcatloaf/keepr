@@ -5,6 +5,12 @@ import { logger } from "@/utils/Logger.js"
 
 
 class VaultsService {
+    async deleteVault(vaultId) {
+        const response = await api.delete(`api/vaults/${vaultId}`)
+        logger.log('Deleted Keep', response.data)
+        const vaultIndex = AppState.vaults.findIndex(vault => vault.id = vaultId)
+        AppState.vaults.splice(vaultIndex, 1)
+    }
     async getVaultById(vaultId) {
         AppState.activeVaults = null
         const response = await api.get(`api/vaults/${vaultId}`)

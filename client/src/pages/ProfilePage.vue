@@ -21,6 +21,7 @@ onMounted(() => {
     getKeeps()
     getVaults()
     getProfileById()
+    console.log(route)
 })
 
 async function getKeeps() {

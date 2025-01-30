@@ -1,12 +1,35 @@
 <script setup>
+import { AppState } from '@/AppState';
+// import { Keep } from '@/models/Keep';
 import { Vault } from '@/models/Vault';
+// import { keepsService } from '@/services/KeepsService';
+import { vaultsService } from '@/services/VaultsService';
+import { logger } from '@/utils/Logger';
+import Pop from '@/utils/Pop';
+import { computed } from 'vue';
 
+const account = computed(() => AppState.account)
 
-
-defineProps({
-    vault: { type: Vault, required: true }
+const props = defineProps({
+    vault: { type: Vault, required: true },
+    // keep: { type: Keep, required: true }
 })
 
+
+async function deleteVault() {
+    try {
+        const confirmed = await Pop.confirm(`Are you sure you want to delete?`)
+        if (!confirmed) return
+        const vaultId = props.vault.id
+        logger.log('Id', vaultId)
+        // const keepId = props.keep.id
+        await vaultsService.deleteVault(vaultId)
+        // router.push({ name: 'Home' })
+    }
+    catch (error) {
+        Pop.meow(error);
+    }
+}
 
 
 </script>
@@ -21,6 +44,9 @@ defineProps({
             </div>
         </div>
     </router-link>
+    <div v-if="vault.creatorId == account?.id">
+        <button @click="deleteVault()" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i></button>
+    </div>
 </template>
 
 <style scoped lang="scss">

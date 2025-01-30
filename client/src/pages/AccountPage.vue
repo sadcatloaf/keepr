@@ -8,6 +8,7 @@ import KeepCard from '@/components/KeepCard.vue';
 import VaultCard from '@/components/VaultCard.vue';
 import { accountService } from '@/services/AccountService.js';
 import { useRoute } from 'vue-router';
+import AccountEditModal from '@/components/AccountEditModal.vue';
 
 
 const account = computed(() => AppState.account)
@@ -62,7 +63,8 @@ async function getVaults() {
       <img class="cover-img" :src="account.coverImg" alt="" />
       <div>
         <img class="img-profile" :src="account.picture" alt="" />
-        <button class="right-align-button" style="border: none; font-size: 40px">...</button>
+        <button class="right-align-button" style="border: none; font-size: 40px" data-bs-toggle="modal"
+          data-bs-target="#accountEditModal">...</button>
         <h1>{{ account.name }}</h1>
         <p>{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</p>
       </div>
@@ -93,6 +95,7 @@ async function getVaults() {
       </div>
     </section>
   </div>
+  <AccountEditModal />
 </template>
 
 <style scoped lang="scss">

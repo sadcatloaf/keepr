@@ -1,10 +1,15 @@
 <script setup>
 
 
+import { AppState } from '@/AppState';
 import { Keep } from '@/models/Keep';
 import { keepsService } from '@/services/KeepsService';
+import Pop from '@/utils/Pop';
+import { computed } from 'vue';
+// import { useRouter } from 'vue-router';
 
-
+const account = computed(() => AppState.account)
+// const router = useRouter()
 
 const props = defineProps({
     keep: { type: Keep, required: true }
@@ -12,9 +17,24 @@ const props = defineProps({
 
 function setActiveKeep() {
     keepsService.setActiveKeep(props.keep)
+    keepsService.IncrementViews(props.keep.id);
+}
+async function deleteKeep() {
+    try {
+        const confirmed = await Pop.confirm(`Are you sure you want to delete?`)
+        if (!confirmed) return
+        const keepId = props.keep.id
+        await keepsService.deleteKeep(keepId)
+        // router.push({ name: 'Home' })
+    }
+    catch (error) {
+        Pop.meow(error);
+    }
 }
 
+
 </script>
+
 
 <template>
     <div @click="setActiveKeep()" class="keep-card text-light fs-4  mb-5" data-bs-toggle="modal"
@@ -27,6 +47,9 @@ function setActiveKeep() {
             <div>
             </div>
         </div>
+    </div>
+    <div v-if="keep.creatorId == account?.id">
+        <button @click="deleteKeep()" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i></button>
     </div>
 </template>
 

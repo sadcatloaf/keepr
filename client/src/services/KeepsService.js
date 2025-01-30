@@ -4,9 +4,17 @@ import { Keep } from "@/models/Keep.js"
 import { AppState } from "@/AppState.js"
 
 class KeepsService {
+
+    async IncrementViews(keepId) {
+        const response = await api.get(`api/keeps/${keepId}`)
+        logger.log('get views', response.data)
+
+    }
     async deleteKeep(keepId) {
         const response = await api.delete(`api/keeps/${keepId}`)
         logger.log('Deleted Keep', response.data)
+        const keepIndex = AppState.keeps.findIndex(keep => keep.id = keepId)
+        AppState.keeps.splice(keepIndex, 1)
     }
     async getKeepsByVaultId(vaultId) {
         AppState.keeps = []
@@ -29,6 +37,7 @@ class KeepsService {
     }
     setActiveKeep(keep) {
         AppState.activeKeeps = keep
+        AppState.activeKeeps.views++
     }
 
     async createKeep(keepData) {
