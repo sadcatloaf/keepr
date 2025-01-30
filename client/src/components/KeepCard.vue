@@ -1,14 +1,14 @@
 <script setup>
-import { AppState } from '@/AppState';
+
+
 import { Keep } from '@/models/Keep';
 import { keepsService } from '@/services/KeepsService';
-import { computed } from 'vue';
+
 
 
 const props = defineProps({
     keep: { type: Keep, required: true }
 })
-
 
 function setActiveKeep() {
     keepsService.setActiveKeep(props.keep)

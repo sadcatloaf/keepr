@@ -110,4 +110,17 @@ public class KeepsRepository
         }, new { profileId }).ToList();
         return keeps;
     }
+
+    internal void IncrementViews(Keep keep)
+    {
+        string sql = @"
+        UPDATE keeps
+        SET views = @Views
+        WHERE id = @Id
+        LIMIT 1;";
+
+        int rowsAffected = _db.Execute(sql, keep);
+
+        if (rowsAffected != 1) throw new Exception($"{rowsAffected} WERE UPDATED AND THATS BAD JUJU");
+    }
 }

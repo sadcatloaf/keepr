@@ -7,7 +7,7 @@ import { keepsService } from '@/services/KeepsService.js';
 import KeepCard from '@/components/KeepCard.vue';
 import VaultCard from '@/components/VaultCard.vue';
 import { accountService } from '@/services/AccountService.js';
-// import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 
 const account = computed(() => AppState.account)
@@ -15,7 +15,7 @@ const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
 const vaults = computed(() => AppState.vaults)
 
-// const route = useRoute()
+const route = useRoute()
 watch(account, () => {
   getKeepsProfileId()
 }, { immediate: true })
@@ -49,6 +49,10 @@ async function getVaults() {
     logger.log("[Getting Vaults]", error.message)
   }
 }
+
+
+
+
 
 </script>
 

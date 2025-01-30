@@ -1,7 +1,9 @@
 <script setup>
 import { AppState } from '@/AppState';
 import KeepCard from '@/components/KeepCard.vue';
+import KeepDetailModal from '@/components/KeepDetailModal.vue';
 import VaultCard from '@/components/VaultCard.vue';
+import VaultKeepDetailModal from '@/components/VaultKeepDetailModal.vue';
 import { keepsService } from '@/services/KeepsService';
 import { vaultsService } from '@/services/VaultsService';
 import { logger } from '@/utils/Logger';
@@ -47,10 +49,6 @@ async function getKeepsByVaultId() {
     <div class="container-fluid">
         <section class="row">
             <div class="col-md-12">
-                {{ vault }}
-            </div>
-
-            <div class="col-md-12">
                 <div class="row">
                     <div v-for="keep in keeps" :key="keep.id" class="col-md-3 p-md-2">
                         <KeepCard :keep="keep" />
@@ -59,7 +57,7 @@ async function getKeepsByVaultId() {
             </div>
         </section>
     </div>
-    <VaultDetailModal />
+    <VaultKeepDetailModal />
 </template>
 
 <style scoped lang="scss"></style>

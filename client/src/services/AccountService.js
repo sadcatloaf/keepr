@@ -24,6 +24,12 @@ class AccountService {
   setActiveVault(vault) {
     AppState.activeVaults = vault
   }
+
+  async updateAccount(accountData) {
+    const response = await api.put('/account', accountData)
+    logger.log('Updated Account', response.data)
+    AppState.account = new Account(response.data)
+  }
 }
 
 export const accountService = new AccountService()

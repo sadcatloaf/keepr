@@ -62,6 +62,13 @@ CREATE TABLE vaults(
 
 DROP TABLE vaults;
 
+-- CREATE VIEW keeps_with_kept_count_view AS
+-- SELECT
+-- keeps.*,
+-- COUNT(keep.id) AS kept_count
+-- FROM keeps
+-- LEFT JOIN 
+-- ??????????????????????????
 
 
 
@@ -72,7 +79,7 @@ SELECT
         JOIN keeps ON keeps.creator_id = accounts.id
         WHERE accounts.id = '6758bbc002d980ff6cdb96c2';
 
-         SELECT
+          SELECT
             keeps.*,
             vaultKeeps.id AS vaultKeepId,
             accounts.*

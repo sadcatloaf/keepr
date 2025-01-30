@@ -31,15 +31,15 @@ const keepDetail = computed(() => AppState.activeKeeps)
                                     </div>
                                     <h5 class="card-title text-center p-2">{{ keepDetail?.name }}</h5>
                                     <p class="card-text p-2">{{ keepDetail?.description }}</p>
-                                    <button class="round-pill">Save</button>
-                                    <router-link v-if="keepDetail != null"
-                                        :to="{ name: 'Profile', params: { profileId: keepDetail?.creatorId } }">
-                                        <div data-bs-dismiss="modal">
+                                    <button>Remove</button>
+                                    <div data-bs-dismiss="modal">
+                                        <router-link v-if="keepDetail != null"
+                                            :to="{ name: 'Profile', params: { profileId: keepDetail?.creatorId } }">
                                             <img :src="keepDetail?.creator.picture" alt=""
                                                 class="creator-img img-fluid">
                                             <b class="p-2">{{ keepDetail?.creator.name }}</b>
-                                        </div>
-                                    </router-link>
+                                        </router-link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,12 +51,6 @@ const keepDetail = computed(() => AppState.activeKeeps)
         </div>
     </div>
 </template>
-<!-- <select v-model="editableReportData.restaurantId" class="form-select" aria-label="Pick a restaurant" required>
-    <option value="" disabled selected>Select a restaurant</option>
-    <option v-for="restaurant in restaurants" :key="'reportFrom' + restaurant.id" :value="restaurant.id">
-      {{ restaurant.name }}
-    </option>
-  </select> -->
 
 <style scoped lang="scss">
 .round-pill {

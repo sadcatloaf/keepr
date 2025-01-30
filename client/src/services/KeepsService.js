@@ -4,10 +4,14 @@ import { Keep } from "@/models/Keep.js"
 import { AppState } from "@/AppState.js"
 
 class KeepsService {
+    async deleteKeep(keepId) {
+        const response = await api.delete(`api/keeps/${keepId}`)
+        logger.log('Deleted Keep', response.data)
+    }
     async getKeepsByVaultId(vaultId) {
         AppState.keeps = []
         const response = await api.get(`api/vaults/${vaultId}/keeps`)
-        logger.log('[Got Keeps', response.data)
+        logger.log('Got Keeps', response.data)
         AppState.keeps = response.data.map(pojo => new Keep(pojo))
     }
     async getKeepsByProfileId(profileId) {
@@ -29,7 +33,7 @@ class KeepsService {
 
     async createKeep(keepData) {
         const response = await api.post('api/keeps', keepData)
-        logger.log('Craeted Keep', response.data)
+        logger.log('Created Keep', response.data)
         const keep = new Keep(response.data)
         AppState.keeps.unshift(keep)
         return keep
