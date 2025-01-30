@@ -9,6 +9,7 @@ import VaultCard from '@/components/VaultCard.vue';
 import { accountService } from '@/services/AccountService.js';
 import { profilesService } from '@/services/ProfilesService.js';
 import { useRoute } from 'vue-router';
+import { vaultsService } from '@/services/VaultsService.js';
 
 const account = computed(() => AppState.account)
 const profile = computed(() => AppState.activeProfiles)
@@ -18,15 +19,16 @@ const vaults = computed(() => AppState.vaults)
 const route = useRoute()
 
 onMounted(() => {
-    getKeeps()
+    getKeepsByProfileId()
     getVaults()
     getProfileById()
     console.log(route)
 })
 
-async function getKeeps() {
+async function getKeepsByProfileId() {
     try {
-        await keepsService.getKeeps()
+        const profileId = route.params.profileId
+        await keepsService.getKeepsByProfileId(profileId)
     }
     catch (error) {
         Pop.meow(error)
@@ -37,7 +39,9 @@ async function getKeeps() {
 }
 async function getVaults() {
     try {
-        await accountService.getVaults()
+
+        const profileId = route.params.profileId
+        await vaultsService.getVaultsByProfileId(profileId)
     }
     catch (error) {
         Pop.meow(error);
