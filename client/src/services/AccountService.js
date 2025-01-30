@@ -1,3 +1,4 @@
+import { Vault } from '@/models/Vault.js'
 import { AppState } from '../AppState.js'
 import { Account } from '../models/Account.js'
 import { logger } from '../utils/Logger.js'
@@ -11,6 +12,17 @@ class AccountService {
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
+  }
+
+  async getVaults() {
+    const response = await api.get('/account/vaults')
+    logger.log('Got Vaults', response.data)
+    const vaults = response.data.map(vaultPOJO => new Vault(vaultPOJO))
+    AppState.vaults = vaults
+  }
+
+  setActiveVault(vault) {
+    AppState.activeVaults = vault
   }
 }
 

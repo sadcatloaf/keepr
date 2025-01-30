@@ -1,11 +1,14 @@
 <script setup>
+import { AppState } from '@/AppState';
 import { Keep } from '@/models/Keep';
 import { keepsService } from '@/services/KeepsService';
+import { computed } from 'vue';
 
 
 const props = defineProps({
     keep: { type: Keep, required: true }
 })
+
 
 function setActiveKeep() {
     keepsService.setActiveKeep(props.keep)
@@ -46,3 +49,7 @@ function setActiveKeep() {
     }
 }
 </style>
+
+<!-- <router-link :to="{name: 'Profile', params: { profileId: profile.id },}">
+    <img :src="post.creator?.picture" alt="" class="creator-img me-2" />
+  </router-link> -->

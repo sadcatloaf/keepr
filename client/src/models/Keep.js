@@ -8,7 +8,7 @@ export class Keep {
         this.description = data.description
         this.img = data.img
         this.views = data.views
-        this.creatorId = data.createdId
+        this.creatorId = data.creatorId
         this.creator = data.creator
         this.kept = data.kept
         this.vaultKeepId = data.vaultKeepId

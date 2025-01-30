@@ -4,8 +4,6 @@ import { computed } from 'vue';
 
 
 const keepDetail = computed(() => AppState.activeKeeps)
-const account = computed(() => AppState.account)
-// const keep = computed(() => AppState.keeps)
 </script>
 
 <template>
@@ -34,16 +32,20 @@ const account = computed(() => AppState.account)
                                     <h5 class="card-title text-center p-2">{{ keepDetail?.name }}</h5>
                                     <p class="card-text p-2">{{ keepDetail?.description }}</p>
                                     <button>Something to ask about!!</button> <button class="round-pill">Save</button>
-                                    <img :src="account?.picture" alt="" class="creator-img img-fluid">
-                                    <b class="p-2">{{ account?.name }}</b>
-
-                                    <!-- <img :src="keep.creator.picture" alt="" class="creator-img img-fluid"> -->
+                                    <router-link v-if="keepDetail != null"
+                                        :to="{ name: 'Profile', params: { profileId: keepDetail?.creatorId } }">
+                                        <div data-bs-dismiss="modal">
+                                            <img :src="keepDetail?.creator.picture" alt=""
+                                                class="creator-img img-fluid">
+                                            <b class="p-2">{{ keepDetail?.creator.name }}</b>
+                                        </div>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" data-bs-dismiss="modal">
                 </div>
             </div>
         </div>
@@ -68,3 +70,10 @@ const account = computed(() => AppState.account)
     aspect-ratio: 1/1;
 }
 </style>
+// NOTE - USE THIS FOR YOUR SELECT VAULTS
+<!-- <select v-model="editableReportData.restaurantId" class="form-select" aria-label="Pick a restaurant" required>
+    <option value="" disabled selected>Select a restaurant</option>
+    <option v-for="restaurant in restaurants" :key="'reportFrom' + restaurant.id" :value="restaurant.id">
+      {{ restaurant.name }}
+    </option>
+  </select> -->

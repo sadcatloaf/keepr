@@ -1,37 +1,48 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
 import { keepsService } from '@/services/KeepsService.js';
 import KeepCard from '@/components/KeepCard.vue';
-import { vaultsService } from '@/services/VaultsService.js';
 import VaultCard from '@/components/VaultCard.vue';
+import { accountService } from '@/services/AccountService.js';
+// import { useRoute } from 'vue-router';
+
 
 const account = computed(() => AppState.account)
 
 const keeps = computed(() => AppState.keeps)
 const vaults = computed(() => AppState.vaults)
 
+// const route = useRoute()
+watch(account, () => {
+  getKeepsProfileId()
+}, { immediate: true })
+
 onMounted(() => {
-  getKeeps()
+
   getVaults()
 })
 
-async function getKeeps() {
+async function getKeepsProfileId() {
   try {
-    await keepsService.getKeeps()
+    // TODO end the function early so when there isn't an account available, it doesn't error
+
+    // ---
+    const profileId = account.value.id
+    await keepsService.getKeepsByProfileId(profileId)
   }
   catch (error) {
     Pop.meow(error)
-    logger.error("[Getting Keeps]", error.message)
+    logger.error("[Getting Keeps by creator]", error.message)
   }
 
 
 }
 async function getVaults() {
   try {
-    await vaultsService.getVaults()
+    await accountService.getVaults()
   }
   catch (error) {
     Pop.meow(error);
@@ -44,7 +55,7 @@ async function getVaults() {
 <template>
   <div class="about text-center">
     <div v-if="account">
-      <img class="" :src="account.coverImg" alt="" />
+      <img class="cover-img" :src="account.coverImg" alt="" />
       <div>
         <img class="img-profile" :src="account.picture" alt="" />
         <button class="right-align-button" style="border: none; font-size: 40px">...</button>
@@ -84,5 +95,13 @@ async function getVaults() {
 .img-profile {
   max-width: 100px;
   border-radius: 50px;
+}
+
+.cover-img {
+  width: 60%;
+  height: 30dvh;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 40px;
 }
 </style>

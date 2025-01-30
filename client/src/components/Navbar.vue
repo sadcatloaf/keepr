@@ -33,9 +33,9 @@ function toggleTheme() {
         <span class="visually-hidden">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">new keep</a></li>
+        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#keepFormModal">new keep</a></li>
         <hr class="dropdown-divider">
-        <li><a class="dropdown-item" href="#">new vault</a></li>
+        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#vaultFormModal">new vault</a></li>
         <li>
         </li>
       </ul>

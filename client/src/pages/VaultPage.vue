@@ -1,27 +1,45 @@
 <script setup>
 import { AppState } from '@/AppState';
+import KeepCard from '@/components/KeepCard.vue';
 import VaultCard from '@/components/VaultCard.vue';
+import { keepsService } from '@/services/KeepsService';
 import { vaultsService } from '@/services/VaultsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
 import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
-const vaults = computed(() => AppState.vaults)
+const keeps = computed(() => AppState.keeps)
+const vault = computed(() => AppState.activeVaults)
+
+const route = useRoute()
 
 onMounted(() => {
-    getVaults()
+    getVaultById()
+    getKeepsByVaultId()
 })
 
-async function getVaults() {
+async function getVaultById() {
     try {
-        await vaultsService.getVaults()
+        const vaultId = route.params.vaultId
+        await vaultsService.getVaultById(vaultId)
+    } catch (error) {
+        Pop.meow(error)
+        logger.error('[GETTING PROFILE BY ID]', error)
+    }
+}
+
+async function getKeepsByVaultId() {
+    try {
+        const vaultId = route.params.vaultId
+        await keepsService.getKeepsByVaultId(vaultId)
     }
     catch (error) {
-        Pop.meow(error)
-        logger.error("[Getting Vaults]", error.message)
+        Pop.meow(error);
+        logger.error('')
     }
-
 }
+
 
 </script>
 
@@ -29,9 +47,13 @@ async function getVaults() {
     <div class="container-fluid">
         <section class="row">
             <div class="col-md-12">
+                {{ vault }}
+            </div>
+
+            <div class="col-md-12">
                 <div class="row">
-                    <div v-for="vault in vaults" :key="vault.id" class="col-md-3 p-md-2">
-                        <VaultCard :vault="vault" />
+                    <div v-for="keep in keeps" :key="keep.id" class="col-md-3 p-md-2">
+                        <KeepCard :keep="keep" />
                     </div>
                 </div>
             </div>
