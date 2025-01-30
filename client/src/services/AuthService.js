@@ -4,6 +4,7 @@ import { audience, clientId, domain } from '../env.js'
 import { accountService } from './AccountService.js'
 import { api } from './AxiosService.js'
 import { socketService } from './SocketService.js'
+import { vaultKeepService } from './vaultKeepService.js'
 
 
 export const AuthService = initialize({
@@ -15,12 +16,13 @@ export const AuthService = initialize({
   }
 })
 
-AuthService.on(AUTH_EVENTS.AUTHENTICATED, async function() {
+AuthService.on(AUTH_EVENTS.AUTHENTICATED, async function () {
   api.defaults.headers.authorization = AuthService.bearer
   api.interceptors.request.use(refreshAuthToken)
   AppState.identity = AuthService.identity
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
+  await accountService.getVaults()
   // NOTE if there is something you want to do once the user is authenticated, place that here
 })
 

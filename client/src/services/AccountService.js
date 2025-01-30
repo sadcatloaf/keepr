@@ -19,6 +19,8 @@ class AccountService {
     logger.log('Got Vaults', response.data)
     const vaults = response.data.map(vaultPOJO => new Vault(vaultPOJO))
     AppState.vaults = vaults
+    const myVaults = response.data.map(myVaultPOJO => new Vault(myVaultPOJO))
+    AppState.myVaults = myVaults
   }
 
   setActiveVault(vault) {

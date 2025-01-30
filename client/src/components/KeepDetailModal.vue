@@ -1,36 +1,29 @@
 <script setup>
 import { AppState } from '@/AppState';
-import { keepsService } from '@/services/KeepsService';
+import { vaultKeepService } from '@/services/vaultKeepService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
-import { Modal } from 'bootstrap';
 import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 
 const keepDetail = computed(() => AppState.activeKeeps)
-const vaults = computed(() => AppState.vaults)
+const myVaults = computed(() => AppState.myVaults)
+// const route = useRoute()
 
-
-// const editableKeepData = ref({
-//     name: '',
-//     img: '',
-//     description: '',
-//     keepId: ''
-// })
+const editableVaultKeepData = ref({
+    keepId: '',
+    vaultId: '',
+})
 
 async function saveKeepToVault() {
     try {
-        // TODO come back to me
-        // await keepsService.createKeep(editableKeepData.value)
-        // editableKeepData.value = {
-        //     name: '',
-        //     img: '',
-        //     description: '',
-        //     keepId: ''
-
-        // }
+        // @ts-ignore
+        editableVaultKeepData.value.keepId = keepDetail.value.id
+        logger.log('Saving keep', keepDetail.value.id, editableVaultKeepData.value)
+        await vaultKeepService.createKeep(editableVaultKeepData.value)
+        // TODO send editable to the vaultKeep service to POST vaultKeep
         // Modal.getInstance('#keepFormModal').hide()
-
     }
     catch (error) {
         Pop.meow(error);
@@ -52,6 +45,7 @@ async function saveKeepToVault() {
                     <div class="card mb-3" style="">
                         <div class="row g-0">
                             <div class="col-md-4">
+                                {{ keepDetail?.id }}
                                 <img :src="keepDetail?.img" class="img-fluid img-keep" alt="">
                             </div>
                             <div class="col-md-8">
@@ -65,15 +59,15 @@ async function saveKeepToVault() {
                                     <h5 class="card-title text-center p-2">{{ keepDetail?.name }}</h5>
                                     <p class="card-text p-2">{{ keepDetail?.description }}</p>
                                     <form action="">
-                                        <!-- <select v-model="editableKeepData.keepId" class="form-select"
+                                        <select v-model="editableVaultKeepData.vaultId" class="form-select"
                                             aria-label="Pick a keep" required>
                                             <option value="" disabled selected></option>
-                                            <option v-for="vault in vaults" :key="'vaultForm' + vault.id"
+                                            <option v-for="vault in myVaults" :key="'vaultForm' + vault.id"
                                                 :value="vault.id">
                                                 {{ vault.name }}</option>
-                                        </select> -->
+                                        </select>
                                     </form>
-                                    <button class="round-pill">Save</button>
+                                    <button @click="saveKeepToVault()" class="round-pill">Save</button>
                                     <router-link v-if="keepDetail != null"
                                         :to="{ name: 'Profile', params: { profileId: keepDetail?.creatorId } }">
                                         <div data-bs-dismiss="modal">
@@ -93,12 +87,6 @@ async function saveKeepToVault() {
         </div>
     </div>
 </template>
-<!-- <select v-model="editableReportData.restaurantId" class="form-select" aria-label="Pick a restaurant" required>
-    <option value="" disabled selected>Select a restaurant</option>
-    <option v-for="restaurant in restaurants" :key="'reportFrom' + restaurant.id" :value="restaurant.id">
-      {{ restaurant.name }}
-    </option>
-  </select> -->
 
 <style scoped lang="scss">
 .round-pill {

@@ -8,8 +8,10 @@ export const AppState = reactive({
   account: null,
   /** @type {import('./models/Keep.js').Keep[]} user info from the database*/
   keeps: [],
-  /** @type {import('./models/Vault.js').Vault[]} user info from the database*/
+  /** @type {import('./models/Vault.js').Vault[]} Vaults to be displayed on the Profile page*/
   vaults: [],
+  /** @type {import('./models/Vault.js').Vault[]} Vaults to be displayed in the drop down menu, for the logged in user*/
+  myVaults: [],
   /** @type {import('./models/Keep.js').Keep} user info from the database*/
   activeKeeps: null,
   /** @type {import('./models/Vault.js').Vault} user info from the database*/
