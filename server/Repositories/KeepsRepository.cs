@@ -33,14 +33,18 @@ public class KeepsRepository
         return keep;
     }
 
+    // TODO also add the count select here with the GROUP BY clause
     internal List<Keep> GetAllKeeps()
     {
         string sql = @"
         SELECT
         keeps.*,
+        COUNT(vaultKeeps.id) AS kept,
         accounts.*
         FROM keeps
-        JOIN accounts ON keeps.creator_id = accounts.id;";
+        JOIN accounts ON keeps.creator_id = accounts.id
+        LEFT JOIN vaultKeeps ON keeps.id = vaultKeeps.keep_id
+        GROUP BY(keeps.id);";
 
         List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
         {
@@ -50,13 +54,17 @@ public class KeepsRepository
         return keeps;
     }
 
+
+
     internal Keep GetKeepById(int keepId)
     {
         string sql = @"
         SELECT
         keeps.*,
+        COUNT(vaultKeeps.id) AS kept,
         accounts.*
         FROM keeps
+        LEFT JOIN vaultKeeps ON keeps.id = vaultKeeps.keep_id
         JOIN accounts ON keeps.creator_id = accounts.id
         WHERE keeps.id = @keepId;";
 

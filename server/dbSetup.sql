@@ -105,3 +105,53 @@ INSERT into `vaultKeeps` (vault_id, keep_id, creator_id) VALUES (239, 193, '6758
 --         JOIN vaultKeeps ON vaultKeeps.keep_id = keeps.id
 --         JOIN vaults ON vaults.id = vaultKeeps.vault_id
 --         WHERE vaultKeeps.vault_id = 242;
+
+
+ SELECT
+        keeps.*,
+        COUNT(vaultKeeps.id) AS kept,
+        accounts.*
+        FROM keeps
+        LEFT JOIN vaultKeeps ON keeps.id = vaultKeeps.keep_id
+        JOIN accounts ON keeps.creator_id = accounts.id
+        WHERE keeps.id = @keepId;
+ SELECT
+        keeps.*,
+        COUNT(vaultKeeps.id) AS kept,
+        accounts.*
+        FROM keeps
+        JOIN accounts ON keeps.creator_id = accounts.id
+        LEFT JOIN vaultKeeps ON keeps.id = vaultKeeps.keep_id
+        WHERE keeps.id = @keepId
+        GROUP BY(keeps.id);
+    
+
+
+--         keeps.*,
+--         COUNT(vaultKeeps.id) AS kept,
+--         accounts.*
+--         FROM keeps
+--         LEFT JOIN vaultKeeps ON keeps.id = vaultKeeps.keep_id
+--         JOIN accounts ON keeps.creator_id = accounts.id
+--         WHERE keeps.id = @keepId;
+
+    --SELECT
+    --=  cryptids.*,
+    --  COUNT(cryptid_encounters.id) AS encounter_count,
+    --=  accounts.*
+    --= FROM cryptids
+    --  LEFT JOIN cryptid_encounters ON cryptids.id = cryptid_encounters.cryptid_id
+    --=  JOIN accounts ON cryptids.discoverer_id = accounts.id
+    -- GROUP BY(cryptids.id)
+    -- ORDER BY cryptids.created_at ASC;";
+
+
+    --  SELECT
+    -- cryptids.*,
+    -- COUNT(cryptid_encounters.id) AS encounter_count,
+    -- accounts.*
+    -- FROM cryptids
+    -- JOIN accounts ON cryptids.discoverer_id = accounts.id
+    -- LEFT JOIN cryptid_encounters ON cryptids.id = cryptid_encounters.cryptid_id
+    -- WHERE cryptids.id = @cryptidId
+    -- GROUP BY (cryptids.id);

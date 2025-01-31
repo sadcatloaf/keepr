@@ -5,11 +5,6 @@ import { AppState } from "@/AppState.js"
 
 class KeepsService {
 
-    async IncrementViews(keepId) {
-        const response = await api.get(`api/keeps/${keepId}`)
-        logger.log('get views', response.data)
-
-    }
     async deleteKeep(keepId) {
         const response = await api.delete(`api/keeps/${keepId}`)
         logger.log('Deleted Keep', response.data)
@@ -34,14 +29,21 @@ class KeepsService {
 
 
     async getKeeps() {
+        AppState.keeps = []
         const response = await api.get('api/keeps')
         logger.log('Got Keeps', response.data)
         const keeps = response.data.map(keepPOJO => new Keep(keepPOJO))
         AppState.keeps = keeps
     }
+
     setActiveKeep(keep) {
         AppState.activeKeeps = keep
         AppState.activeKeeps.views++
+    }
+    async IncrementViews(keepId) {
+        const response = await api.get(`api/keeps/${keepId}`)
+        logger.log('get views', response.data)
+
     }
 
     async createKeep(keepData) {

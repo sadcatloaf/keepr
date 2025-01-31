@@ -1,9 +1,27 @@
 <script setup>
 import { AppState } from '@/AppState';
+import { keepsService } from '@/services/KeepsService';
+import { vaultKeepService } from '@/services/vaultKeepService';
+import { logger } from '@/utils/Logger';
+import Pop from '@/utils/Pop';
 import { computed } from 'vue';
 
 
 const keepDetail = computed(() => AppState.activeKeeps)
+const vaultKeep = computed(() => AppState.myVaults)
+
+async function removeKeep(vaultkeepId) {
+    try {
+        const yes = await Pop.confirm('Are you sure you want to remove this keep?')
+        if (!yes) return
+
+        await vaultKeepService.removeKeep(vaultkeepId)
+    }
+    catch (error) {
+        Pop.meow(error);
+        logger.error('[Remove Kept keep]', error)
+    }
+}
 </script>
 
 <template>
@@ -31,7 +49,7 @@ const keepDetail = computed(() => AppState.activeKeeps)
                                     </div>
                                     <h5 class="card-title text-center p-2">{{ keepDetail?.name }}</h5>
                                     <p class="card-text p-2">{{ keepDetail?.description }}</p>
-                                    <button>Remove</button>
+                                    <button @click="removeKeep(keepDetail.vaultKeepId)">Remove</button>
                                     <div data-bs-dismiss="modal">
                                         <router-link v-if="keepDetail != null"
                                             :to="{ name: 'Profile', params: { profileId: keepDetail?.creatorId } }">

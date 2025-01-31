@@ -12,16 +12,15 @@ class VaultKeepService {
         const vaultKeep = new Vault(response.data)
         return vaultKeep
     }
-    // TODO create vaultKeep
+    async removeKeep(vaultKeepId) {
+        // AppState.vaults = []
+        const response = await api.delete(`api/vaultkeeps/${vaultKeepId}`)
+        logger.log('Removed Keep', response.data)
+        const vaultKeepIndex = AppState.keeps.findIndex(banana => banana.vaultKeepId == vaultKeepId)
+        logger.log('removing from position', vaultKeepIndex)
+        AppState.keeps.splice(vaultKeepIndex, 1)
+    }
 
 }
 
 export const vaultKeepService = new VaultKeepService()
-
-//  async createVault(vaultData) {
-//         const response = await api.post('api/vaults', vaultData)
-//         logger.log('Created Vault', response.data)
-//         const vault = new Vault(response.data)
-//         AppState.vaults.unshift(vault)
-//         return vault
-//     }
