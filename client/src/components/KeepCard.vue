@@ -38,35 +38,55 @@ async function deleteKeep() {
 
 <template>
     <div @click="setActiveKeep()" class="keep-card text-light fs-4  mb-5" data-bs-toggle="modal"
-        data-bs-target="#keepDetailModal" :style="{ backgroundImage: `url(${keep.img})` }">
-        <div class="inner-card d-flex flex-column justify-content-between p-3">
-            <div class="">
-                <span class="p-3">{{ keep.name }}</span>
-                <img :src="keep.creator.picture" alt="" class="creator-img img-fluid">
+        data-bs-target="#keepDetailModal">
+        <div class="inner-card d-flex flex-column justify-content-between">
+            <img :src="keep.img" alt="">
+            <div class="keep-info d-flex justify-content-between align-items-end p-2 pt-4">
+                <span class="">{{ keep.name }}</span>
+                <img :src="keep.creator.picture" alt="" class="creator-img ">
             </div>
             <div>
             </div>
+            <div v-if="keep.creatorId == account?.id" class="delete-btn">
+                <button @click="deleteKeep()" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i></button>
+            </div>
         </div>
     </div>
-    <div v-if="keep.creatorId == account?.id">
-        <button @click="deleteKeep()" class="btn btn-danger"><i class="mdi mdi-delete-forever"></i></button>
-    </div>
+
 </template>
 
 <style scoped lang="scss">
 .keep-card {
-    min-height: 50dvh;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
 
-    .inner-card {
-        min-height: 50dvh;
+    img {
         width: 100%;
+        height: auto;
+    }
+
+    .inner-card {
+        width: 100%;
+        position: relative;
+    }
+
+    .keep-info {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.568) 0%, transparent 100%);
+    }
+
+    .delete-btn {
+        position: absolute;
+        right: -10px;
+        top: -10px;
     }
 
     .creator-img {
-        height: 3rem;
+        height: 45px;
+        width: 45px;
         border-radius: 50%;
         aspect-ratio: 1/1;
     }
